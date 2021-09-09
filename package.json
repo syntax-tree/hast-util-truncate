@@ -1,6 +1,6 @@
 {
   "name": "hast-util-truncate",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "hast utility to truncate the tree to a certain number of characters",
   "license": "MIT",
   "keywords": [
