@@ -11,6 +11,7 @@
  * @property {string} [ellipsis]
  *   Value to use at truncation point.
  * @property {number} [maxCharacterStrip=30]
+ *   How far to walk back.
  *   The algorithm attempts to break right after a word rather than the exact
  *   `size`.
  *   Take for example the `|`, which is the actual break defined by `size`, and
@@ -22,7 +23,7 @@
  *   This prevents a potential slow operation on larger `size`s without any
  *   whitespace.
  *   If `maxCharacterStrip` characters are walked back and no nice break point
- *   is found, the bad break point.
+ *   is found, the bad break point is used.
  *   Set `maxCharacterStrip: 0` to not find a nice break.
  * @property {Content[]} [ignore=[]]
  *   Nodes to exclude from the resulting tree.

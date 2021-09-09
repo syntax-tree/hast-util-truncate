@@ -23,19 +23,42 @@ npm install hast-util-truncate
 
 ## Use
 
-Say we have the following HTML file, `example.html`:
-
-```html
-```
-
-And our module, `example.js`, contains:
+Say we have the following module, `example.js`:
 
 ```js
+import {h} from 'hastscript'
+import {truncate} from 'hast-util-truncate'
+
+const tree = h('p', [
+  'Lorem ipsum dolor sit amet, ',
+  h('em', 'consectetur'),
+  'adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud'
+])
+
+console.log(truncate(tree, {ellipsis: '…'}));
 ```
 
 Now, running `node example.js` yields:
 
-```html
+```js
+{
+  type: 'element',
+  tagName: 'p',
+  properties: {},
+  children: [
+    {type: 'text', value: 'Lorem ipsum dolor sit amet, '},
+    {
+      type: 'element',
+      tagName: 'em',
+      properties: {},
+      children: [{type: 'text', value: 'consectetur'}]
+    },
+    {
+      type: 'text',
+      value: 'adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim…'
+    }
+  ]
+}
 ```
 
 ## API
@@ -47,9 +70,38 @@ There is no default export.
 
 Truncate the tree to a certain number of characters.
 
-##### `options`
+###### `options.size`
+
+Number of characters to truncate to (`number`, default: `140`).
+
+###### `options.ellipsis`
+
+Value to use at truncation point (`string`, optional).
+
+###### `options.maxCharacterStrip`
+
+How far to walk back (`number`, default: `30`).
+The algorithm attempts to break right after a word rather than the exact `size`.
+Take for example the `|`, which is the actual break defined by `size`, and the
+`…` is the location where the ellipsis is placed: `This… an|d that`.
+Breaking at `|` would at best look bad but could likely result in things such as
+`ass…` for `assignment` — which is not ideal.
+`maxCharacterStrip` defines how far back the algorithm will walk to find a
+pretty word break.
+This prevents a potential slow operation on larger `size`s without any
+whitespace.
+If `maxCharacterStrip` characters are walked back and no nice break point is
+found, the bad break point is used.
+Set `maxCharacterStrip: 0` to not find a nice break.
+
+###### `options.ignore`
+
+Nodes to exclude from the resulting tree (`Array.<Node>`).
+These are not counted towards `size`.
 
 ###### Returns
+
+`Node` — Truncated copy of `tree`
 
 ## Security
 
