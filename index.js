@@ -25,7 +25,7 @@
  *   If `maxCharacterStrip` characters are walked back and no nice break point
  *   is found, the bad break point is used.
  *   Set `maxCharacterStrip: 0` to not find a nice break.
- * @property {Content[]} [ignore=[]]
+ * @property {Array<Content>} [ignore=[]]
  *   Nodes to exclude from the resulting tree.
  *   These are not counted towards `size`.
  */
@@ -106,7 +106,7 @@ export function truncate(tree, options = {}) {
     const replacement = {...node}
 
     if ('children' in node) {
-      /** @type {Content[]} */
+      /** @type {Array<Content>} */
       const children = []
       let index = -1
 

@@ -96,7 +96,7 @@ Set `maxCharacterStrip: 0` to not find a nice break.
 
 ###### `options.ignore`
 
-Nodes to exclude from the resulting tree (`Array.<Node>`).
+Nodes to exclude from the resulting tree (`Array<Node>`).
 These are not counted towards `size`.
 
 ###### Returns
